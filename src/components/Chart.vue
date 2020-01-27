@@ -1,11 +1,20 @@
 <template>
 <div>
-
-      <v-select :items="listDate"
-                  label="Wybierz rodzaj raportu"
-            class="input-group--focused"
-      />
-       <v-btn large color="primary" @click="GenericMeth">Generuj</v-btn>
+  <v-container>
+    <v-row justify="space-around">
+      <v-date-picker v-model="dateFrom" :show-current="true"></v-date-picker>
+      <v-date-picker v-model="dateTo" :show-current="true"></v-date-picker>
+    </v-row>
+    </v-container>
+            <v-select
+              v-model="selected"
+              :items="ListOfObject"
+              filled
+              chips
+              label="Chips"
+              multiple
+            ></v-select>
+    <v-btn large color="primary" @click="createChart">Generuj</v-btn>
 
   <div class="hello" ref="chartdiv"/>
   
@@ -20,101 +29,291 @@ import axios from 'axios'
 
 am4core.useTheme(am4themes_animated);
 
-
 export default {
   name: 'Chart',
-    data() {
-    return {
-      info: null,
-      listDate :[
+    data: vm => ({
+      ListOfObject :[
         
           {
-            text: "Godzina",
+            text: "person",
           },
           {
-            text: "Dzien",
+            text: "bicycle",
+          },
+          {
+            text: "car",
+          },
+          {
+            text: "motorbike",
+          },
+          {
+            text: "aeroplane",
+          },
+          {
+            text: "bus",
+          },
+          {
+            text: "train",
+          },
+          {
+            text: "truck",
+          },
+          {
+            text: "boat",
+          },
+          {
+            text: "traffic_light",
+          },
+          {
+            text: "fire_hydrant",
+          },
+          {
+            text: "stop_sign",
+          },
+          {
+            text: "parking_meter",
+          },
+          {
+            text: "bench",
+          },
+          {
+            text: "bird",
+          },
+          {
+            text: "cat",
+          },
+          {
+            text: "dog",
+          },
+          {
+            text: "horse",
+          },
+             {
+            text: "sheep",
+          },
+          {
+            text: "cow",
+          },
+          {
+            text: "elephant",
+          },
+          {
+            text: "bear",
+          },
+          {
+            text: "zebra",
+          },
+          {
+            text: "giraffe",
+          },
+          {
+            text: "backpack",
+          },
+          {
+            text: "umbrella",
+          },
+          {
+            text: "Chair",
+          },
+             {
+            text: "person",
+          },
+          {
+            text: "bicycle",
+          },
+          {
+            text: "car",
+          },
+          {
+            text: "motorbike",
+          },
+          {
+            text: "aeroplane",
+          },
+          {
+            text: "bus",
+          },
+          {
+            text: "train",
+          },
+          {
+            text: "truck",
+          },
+          {
+            text: "boat",
+          },
+          {
+            text: "traffic_light",
+          },
+          {
+            text: "fire_hydrant",
+          },
+          {
+            text: "stop_sign",
+          },
+          {
+            text: "parking_meter",
+          },
+          {
+            text: "bench",
+          },
+          {
+            text: "bird",
+          },
+          {
+            text: "cat",
+          },
+          {
+            text: "dog",
+          },
+          {
+            text: "horse",
+          },
+             {
+            text: "sheep",
+          },
+          {
+            text: "cow",
+          },
+          {
+            text: "elephant",
+          },
+          {
+            text: "bear",
+          },
+          {
+            text: "zebra",
+          },
+          {
+            text: "giraffe",
+          },
+          {
+            text: "backpack",
+          },
+          {
+            text: "umbrella",
+          },
+          {
+            text: "Chair",
+          },
+          {
+            text: "handbag",
+          },
+          {
+            text: "tie",
+          },
+          {
+            text: "suitcase",
+          },
+          {
+            text: "frisbee",
+          },
+          {
+            text: "skis",
+          },
+          {
+            text: "snowboard",
+          },
+          {
+            text: "sports_ball",
+          },
+          {
+            text: "kite",
+          },
+          {
+            text: "baseball_bat",
+          },
+          {
+            text: "baseball_glove",
+          },
+          {
+            text: "skateboard",
+          },
+          {
+            text: "surfboard",
+          },
+          {
+            text: "tennis_racket",
+          },
+          {
+            text: "bottle",
+          },
+          {
+            text: "wine_glass",
+          },
+          {
+            text: "cup",
+          },
+          {
+            text: "fork",
+          },
+          {
+            text: "knife",
+          },
+          {
+            text: "spoon",
+          },
+          {
+            text: "bowl",
+          },
+          {
+            text: "banana",
+          },
+          {
+            text: "apple",
+          },
+          {
+            text: "zebra",
+          },
+          {
+            text: "giraffe",
+          },
+          {
+            text: "backpack",
+          },
+          {
+            text: "umbrella",
+          },
+          {
+            text: "Chair",
           },
       ],
-      data: [
-    {
-        "hour": 1,
-        "count": 1399
-    },
-    {
-        "hour": 2,
-        "count": 178
-    },
-    {
-        "hour": 3,
-        "count": 742
-    },
-    {
-        "hour": 4,
-        "count": 400
-    },
-    {
-        "hour": 5,
-        "count": 827
-    },
-    {
-        "hour": 6,
-        "count": 113
-    },
-    {
-        "hour": 7,
-        "count": 57
-    },
-    {
-        "hour": 8,
-        "count": 2208
-    },
-    {
-        "hour": 9,
-        "count": 308
-    },
-    {
-        "hour": 10,
-        "count": 172
-    },
-    {
-        "hour": 13,
-        "count": 2416
-    },
-    {
-        "hour": 14,
-        "count": 1422
-    },
-    {
-        "hour": 15,
-        "count": 286
-    },
-    {
-        "hour": 16,
-        "count": 18
-    },
-    {
-        "hour": 17,
-        "count": 7
-    }
-]
-    }
-  },
+    dateFrom: new Date().toISOString().substr(0, 10),
+    dateTo: new Date().toISOString().substr(0, 10),
+    dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
+    selected : [],
+}),
   methods: {
-    GenericMeth () {
-    axios.get('https://192.168.42.1:8181')
-      .then(response => (this.data = response))
-      console.log(this.info)
-      this.createChart()
-  },
-  createChart () {
-  let chart = am4core.create(this.$refs.chartdiv, am4charts.XYChart);
-    console.log(this.data)
-    chart.paddingRight = 20;
+  async getData() {
+  try {
+    console.log(this.selected)
 
-    chart.data = this.data;
+    return await axios.get('http://192.168.45.103:5002/reports/getMotionByHours',
+    {
+    params: {
+      Begin: this.dateFrom,
+      End: this.dateTo,
+      ObjectType : this.selected,
+      NumberOfPixels : 1000,
+    }
+    })
+  } catch (error) {
+    console.error(error);
+  }
+  },
+  async createChart () {
+
+   let tmp = await this.getData();
+      this.genRap(tmp.data)
+  },
+  genRap (data) {
+        
+    let chart = am4core.create(this.$refs.chartdiv, am4charts.XYChart);
+    chart.paddingRight = 20;
+    chart.data = data;
 
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.dataFields.category = "hour";
+    categoryAxis.dataFields.category = "date";
     categoryAxis.title.text = "Godzinowe nateżenie ruchu";
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.minGridDistance = 20;
@@ -125,7 +324,7 @@ export default {
 
     var series = chart.series.push(new am4charts.LineSeries());
     series.dataFields.valueY = "count";
-    series.dataFields.categoryX = "hour"  ;
+    series.dataFields.categoryX = "date"  ;
   
 
     series.tooltipText = "{valueY}";
@@ -136,10 +335,12 @@ export default {
     chart.scrollbarX = scrollbarX;
 
     this.chart = chart;
-  }
   },
-   mounted() {
-    
+  formatDate (date) {
+    if (!date) return null
+      const [year, month, day] = date.split('-')
+    return `${month}/${day}/${year}`
+  },
   },
   beforeDestroy() {
     if (this.chart) {
@@ -149,7 +350,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .hello {
   width: 100%;
