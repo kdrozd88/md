@@ -9,14 +9,22 @@
             <v-select
               v-model="selected"
               :items="ListOfObject"
+              item-text="text"
+              item-value="val"
               filled
               chips
-              label="Chips"
+              label="Wybierz obiekty na liście :"
               multiple
             ></v-select>
+    <v-container>
+      <v-row justify="space-around">
+          <v-text-field v-model="value1" v-mask="'##'" type="number" label="Ilosc pixeli"></v-text-field>
+          <v-text-field v-model="value" v-mask="mask" type="number" label="prawdopodobienstwo"></v-text-field>
+      </v-row>
+    </v-container>
     <v-btn large color="primary" @click="createChart">Generuj</v-btn>
 
-  <div class="hello" ref="chartdiv"/>
+  <div class="chartCl" ref="chartdiv"/>
   
   </div>
 </template>
@@ -26,257 +34,343 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import axios from 'axios'
+import mask  from 'vue-the-mask'
+
 
 am4core.useTheme(am4themes_animated);
 
 export default {
   name: 'Chart',
+   directives: {
+      mask
+    },
     data: vm => ({
-      ListOfObject :[
+      
+      mask: '##',
+      value: '',
+      value1: '',
+      ListOfObject : [
         
           {
-            text: "person",
+            text: "osoba",
+            val : "person"
           },
           {
-            text: "bicycle",
+            text: "rower",
+            val : "bicycle"
           },
           {
-            text: "car",
+            text: "samochod",
+            val : "car"
           },
           {
-            text: "motorbike",
+            text: "motor",
+            val : "motorbike"
           },
           {
-            text: "aeroplane",
+            text: "samolot",
+            val : "aeroplane"
           },
           {
-            text: "bus",
+            text: "autobus",
+            val : "bus"
           },
           {
-            text: "train",
+            text: "pocaig",
+            val : "train"
           },
           {
-            text: "truck",
+            text: "ciezarowka",
+            val : "truck"
           },
           {
-            text: "boat",
+            text: "lodz",
+            val : "boat"
           },
           {
-            text: "traffic_light",
+            text: "sygnalizacja swietlna",
+            val : "traffic_light"
           },
           {
-            text: "fire_hydrant",
+            text: "hydrant",
+            val : "fire_hydrant"
           },
           {
-            text: "stop_sign",
+            text: "znak stopu",
+            val : "stop_sign"
           },
           {
-            text: "parking_meter",
+            text: "parkomat",
+            val : "parking_meter"
           },
           {
-            text: "bench",
+            text: "lawka",
+            val : "bench"
           },
           {
-            text: "bird",
+            text: "ptak",
+            val : "bird"
           },
           {
-            text: "cat",
+            text: "kot",
+            val : "cat"
           },
           {
-            text: "dog",
+            text: "pies",
+            val : "dog"
           },
           {
-            text: "horse",
-          },
-             {
-            text: "sheep",
+            text: "kon",
+            val : "horse"
           },
           {
-            text: "cow",
+            text: "owca",
+            val : "sheep"
           },
           {
-            text: "elephant",
+            text: "krowa",
+            val : "cow"
           },
           {
-            text: "bear",
+            text: "slon",
+            val : "elephant"
           },
           {
-            text: "zebra",
-          },
-          {
-            text: "giraffe",
-          },
-          {
-            text: "backpack",
-          },
-          {
-            text: "umbrella",
-          },
-          {
-            text: "Chair",
-          },
-             {
-            text: "person",
-          },
-          {
-            text: "bicycle",
-          },
-          {
-            text: "car",
-          },
-          {
-            text: "motorbike",
-          },
-          {
-            text: "aeroplane",
-          },
-          {
-            text: "bus",
-          },
-          {
-            text: "train",
-          },
-          {
-            text: "truck",
-          },
-          {
-            text: "boat",
-          },
-          {
-            text: "traffic_light",
-          },
-          {
-            text: "fire_hydrant",
-          },
-          {
-            text: "stop_sign",
-          },
-          {
-            text: "parking_meter",
-          },
-          {
-            text: "bench",
-          },
-          {
-            text: "bird",
-          },
-          {
-            text: "cat",
-          },
-          {
-            text: "dog",
-          },
-          {
-            text: "horse",
-          },
-             {
-            text: "sheep",
-          },
-          {
-            text: "cow",
-          },
-          {
-            text: "elephant",
-          },
-          {
-            text: "bear",
+            text: "niedzwiedz",
+            val : "bear"
           },
           {
             text: "zebra",
+            val : "zebra"
           },
           {
-            text: "giraffe",
+            text: "zyrafa",
+            val : "giraffe"
           },
           {
-            text: "backpack",
+            text: "plecak",
+            val : "backpack"
           },
           {
-            text: "umbrella",
+            text: "parasolka",
+            val : "umbrella"
           },
           {
-            text: "Chair",
+            text: "torebka",
+            val : "handbag"
           },
           {
-            text: "handbag",
+            text: "krawat",
+            val : "tie"
           },
           {
-            text: "tie",
-          },
-          {
-            text: "suitcase",
+            text: "walizka",
+            val : "suitcase"
           },
           {
             text: "frisbee",
+            val : "frisbee"
           },
           {
-            text: "skis",
+            text: "narty",
+            val : "skis"
           },
           {
             text: "snowboard",
+            val : "snowboard"
           },
           {
-            text: "sports_ball",
+            text: "pilka",
+            val : "sports_ball"
           },
           {
-            text: "kite",
+            text: "latawiec",
+            val : "kite"
           },
           {
-            text: "baseball_bat",
+            text: "pilka do koszykowki",
+            val : "baseball_bat"
           },
           {
-            text: "baseball_glove",
+            text: "rekawica",
+            val : "baseball_glove"
           },
           {
             text: "skateboard",
+            val : "skateboard"
           },
           {
-            text: "surfboard",
+            text: "deska serfingowa",
+            val : "surfboard"
           },
           {
-            text: "tennis_racket",
+            text: "rakieta tenisowa",
+            val : "tennis_racket"
           },
           {
-            text: "bottle",
+            text: "butelka",
+            val : "bottle"
           },
           {
-            text: "wine_glass",
+            text: "kieliszek",
+            val : "wine_glass"
           },
           {
-            text: "cup",
+            text: "kubek",
+            val : "cup"
           },
           {
-            text: "fork",
+            text: "widelec",
+            val : "fork"
           },
           {
-            text: "knife",
+            text: "noz",
+            val : "knife"
           },
           {
-            text: "spoon",
+            text: "lyzeczka",
+            val : "spoon"
           },
           {
-            text: "bowl",
+            text: "miseczka",
+            val : "bowl"
           },
           {
-            text: "banana",
+            text: "banan",
+            val : "banana"
           },
           {
-            text: "apple",
+            text: "jablko",
+            val : "apple"
           },
           {
-            text: "zebra",
+            text: "kanapka",
+            val : "sandwich"
           },
           {
-            text: "giraffe",
+            text: "pomarancza",
+            val : "orange"
           },
           {
-            text: "backpack",
+            text: "brokul",
+            val : "broccoli"
           },
           {
-            text: "umbrella",
+            text: "marchewka",
+            val : "carrot"
           },
           {
-            text: "Chair",
+            text: "hotdog",
+            val : "hot_dog"
           },
+          {
+            text: "pizza",
+            val : "pizza"
+          },
+          {
+            text: "donut",
+            val : "donut"
+          },
+          {
+            text: "ciastko",
+            val : "cake"
+          },
+          {
+            text: "krzeslo",
+            val : "chair"
+          },
+          {
+            text: "sofa",
+            val : "sofa"
+          },
+          {
+            text: "kwiatek",
+            val : "pottedplant"
+          },
+          {
+            text: "lozko",
+            val : "bed"
+          },
+          {
+            text: "stol",
+            val : "diningtable"
+          },
+          {
+            text: "toaleta",
+            val : "toilet"
+          },
+          {
+            text: "tvmonitor",
+            val : "tvmonitor"
+          },
+          {
+            text: "laptop",
+            val : "laptop"
+          },
+          {
+            text: "mysz",
+            val : "mouse"
+          },
+          {
+            text: "pilot",
+            val : "remote"
+          },
+          {
+            text: "klawiatura",
+            val : "keyboard"
+          },
+          {
+            text: "komorka",
+            val : "cell_phone"
+          },
+          {
+            text: "mikrofalowka",
+            val : "microwave"
+          },
+          {
+            text: "piec",
+            val : "oven"
+          },
+          {
+            text: "toster",
+            val : "toaster"
+          },
+          {
+            text: "zlew",
+            val : "sink"
+          },
+          {
+            text: "lodowka",
+            val : "refrigerator"
+          },
+          {
+            text: "ksiazka",
+            val : "book"
+          },
+          {
+            text: "zegar",
+            val : "clock"
+          },
+          {
+            text: "wazon",
+            val : "vase"
+          },
+          {
+            text: "scyzoryk",
+            val : "scissors"
+          },
+          {
+            text: "pluszak",
+            val : "teddy_bear"
+          },
+          {
+            text: "szuszarka",
+            val : "hair_drier"
+          },
+          {
+            text: "szczoteczka",
+            val : "toothbrush"
+          }
       ],
     dateFrom: new Date().toISOString().substr(0, 10),
     dateTo: new Date().toISOString().substr(0, 10),
@@ -351,8 +445,8 @@ export default {
 </script>
 
 <style scoped>
-.hello {
+.chartCl {
   width: 100%;
-  height: 600px;
+  height: 700px;
 }
 </style>
