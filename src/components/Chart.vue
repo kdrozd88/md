@@ -14,12 +14,24 @@
               filled
               chips
               label="Wybierz obiekty na liście :"
-              multiple
             ></v-select>
     <v-container>
       <v-row justify="space-around">
-          <v-text-field v-model="value1" v-mask="'##'" type="number" label="Ilosc pixeli"></v-text-field>
-          <v-text-field v-model="value" v-mask="mask" type="number" label="prawdopodobienstwo"></v-text-field>
+            <v-col cols="6">    
+              <v-select
+                v-model="selectedProbability"
+                :items="ListOfOds"
+                item-text="val"
+                filled
+                chips
+                label="Wybierz obiekty na liście :"
+              ></v-select>
+          </v-col>
+          <v-col
+              cols="6"
+            >              
+              <v-text-field v-model="pixels" v-mask="'##'" type="number" label="Ilosc pixeli"></v-text-field>
+        </v-col>
       </v-row>
     </v-container>
     <v-btn large color="primary" @click="createChart">Generuj</v-btn>
@@ -49,338 +61,351 @@ export default {
       mask: '##',
       value: '',
       value1: '',
+      pixels: '',
+      ListOfOds : [
+         {
+            val : "Small"
+          }, 
+          {
+            val : "Medium"
+          }, 
+          {
+            val : "Big"
+          },
+      ],
       ListOfObject : [
         
           {
-            text: "osoba",
-            val : "person"
+            text: "Osoba",
+            val : "Person"
           },
           {
-            text: "rower",
-            val : "bicycle"
+            text: "Rower",
+            val : "Bicycle"
           },
           {
             text: "samochod",
-            val : "car"
+            val : "Car"
           },
           {
             text: "motor",
-            val : "motorbike"
+            val : "Motorbike"
           },
           {
             text: "samolot",
-            val : "aeroplane"
+            val : "Aeroplane"
           },
           {
             text: "autobus",
-            val : "bus"
+            val : "Bus"
           },
           {
             text: "pocaig",
-            val : "train"
+            val : "Train"
           },
           {
             text: "ciezarowka",
-            val : "truck"
+            val : "Truck"
           },
           {
             text: "lodz",
-            val : "boat"
+            val : "Boat"
           },
           {
             text: "sygnalizacja swietlna",
-            val : "traffic_light"
+            val : "Traffic_light"
           },
           {
             text: "hydrant",
-            val : "fire_hydrant"
+            val : "Fire_hydrant"
           },
           {
             text: "znak stopu",
-            val : "stop_sign"
+            val : "Stop_sign"
           },
           {
             text: "parkomat",
-            val : "parking_meter"
+            val : "Parking_meter"
           },
           {
             text: "lawka",
-            val : "bench"
+            val : "Bench"
           },
           {
             text: "ptak",
-            val : "bird"
+            val : "Bird"
           },
           {
             text: "kot",
-            val : "cat"
+            val : "Cat"
           },
           {
             text: "pies",
-            val : "dog"
+            val : "Dog"
           },
           {
             text: "kon",
-            val : "horse"
+            val : "Horse"
           },
           {
             text: "owca",
-            val : "sheep"
+            val : "Sheep"
           },
           {
             text: "krowa",
-            val : "cow"
+            val : "Cow"
           },
           {
             text: "slon",
-            val : "elephant"
+            val : "Elephant"
           },
           {
             text: "niedzwiedz",
-            val : "bear"
+            val : "Bear"
           },
           {
             text: "zebra",
-            val : "zebra"
+            val : "Zebra"
           },
           {
             text: "zyrafa",
-            val : "giraffe"
+            val : "Giraffe"
           },
           {
             text: "plecak",
-            val : "backpack"
+            val : "Backpack"
           },
           {
             text: "parasolka",
-            val : "umbrella"
+            val : "Umbrella"
           },
           {
             text: "torebka",
-            val : "handbag"
+            val : "Handbag"
           },
           {
             text: "krawat",
-            val : "tie"
+            val : "Tie"
           },
           {
             text: "walizka",
-            val : "suitcase"
+            val : "Suitcase"
           },
           {
             text: "frisbee",
-            val : "frisbee"
+            val : "Frisbee"
           },
           {
             text: "narty",
-            val : "skis"
+            val : "Skis"
           },
           {
             text: "snowboard",
-            val : "snowboard"
+            val : "Snowboard"
           },
           {
             text: "pilka",
-            val : "sports_ball"
+            val : "Sports_ball"
           },
           {
             text: "latawiec",
-            val : "kite"
+            val : "Kite"
           },
           {
             text: "pilka do koszykowki",
-            val : "baseball_bat"
+            val : "Baseball_bat"
           },
           {
             text: "rekawica",
-            val : "baseball_glove"
+            val : "Baseball_glove"
           },
           {
             text: "skateboard",
-            val : "skateboard"
+            val : "Skateboard"
           },
           {
             text: "deska serfingowa",
-            val : "surfboard"
+            val : "Surfboard"
           },
           {
             text: "rakieta tenisowa",
-            val : "tennis_racket"
+            val : "Tennis_racket"
           },
           {
             text: "butelka",
-            val : "bottle"
+            val : "Bottle"
           },
           {
             text: "kieliszek",
-            val : "wine_glass"
+            val : "Wine_glass"
           },
           {
             text: "kubek",
-            val : "cup"
+            val : "Cup"
           },
           {
             text: "widelec",
-            val : "fork"
+            val : "Fork"
           },
           {
             text: "noz",
-            val : "knife"
+            val : "Knife"
           },
           {
             text: "lyzeczka",
-            val : "spoon"
+            val : "Spoon"
           },
           {
             text: "miseczka",
-            val : "bowl"
+            val : "Bowl"
           },
           {
             text: "banan",
-            val : "banana"
+            val : "Banana"
           },
           {
             text: "jablko",
-            val : "apple"
+            val : "Apple"
           },
           {
             text: "kanapka",
-            val : "sandwich"
+            val : "Sandwich"
           },
           {
             text: "pomarancza",
-            val : "orange"
+            val : "Orange"
           },
           {
             text: "brokul",
-            val : "broccoli"
+            val : "Broccoli"
           },
           {
             text: "marchewka",
-            val : "carrot"
+            val : "Carrot"
           },
           {
             text: "hotdog",
-            val : "hot_dog"
+            val : "Hot_dog"
           },
           {
             text: "pizza",
-            val : "pizza"
+            val : "Pizza"
           },
           {
             text: "donut",
-            val : "donut"
+            val : "Donut"
           },
           {
             text: "ciastko",
-            val : "cake"
+            val : "Cake"
           },
           {
             text: "krzeslo",
-            val : "chair"
+            val : "Chair"
           },
           {
             text: "sofa",
-            val : "sofa"
+            val : "Sofa"
           },
           {
             text: "kwiatek",
-            val : "pottedplant"
+            val : "Pottedplant"
           },
           {
             text: "lozko",
-            val : "bed"
+            val : "Bed"
           },
           {
             text: "stol",
-            val : "diningtable"
+            val : "Diningtable"
           },
           {
             text: "toaleta",
-            val : "toilet"
+            val : "Toilet"
           },
           {
             text: "tvmonitor",
-            val : "tvmonitor"
+            val : "Tvmonitor"
           },
           {
             text: "laptop",
-            val : "laptop"
+            val : "Laptop"
           },
           {
             text: "mysz",
-            val : "mouse"
+            val : "Mouse"
           },
           {
             text: "pilot",
-            val : "remote"
+            val : "Remote"
           },
           {
             text: "klawiatura",
-            val : "keyboard"
+            val : "Keyboard"
           },
           {
             text: "komorka",
-            val : "cell_phone"
+            val : "Cell_phone"
           },
           {
             text: "mikrofalowka",
-            val : "microwave"
+            val : "Microwave"
           },
           {
             text: "piec",
-            val : "oven"
+            val : "Oven"
           },
           {
             text: "toster",
-            val : "toaster"
+            val : "Toaster"
           },
           {
             text: "zlew",
-            val : "sink"
+            val : "Sink"
           },
           {
             text: "lodowka",
-            val : "refrigerator"
+            val : "Refrigerator"
           },
           {
             text: "ksiazka",
-            val : "book"
+            val : "Book"
           },
           {
             text: "zegar",
-            val : "clock"
+            val : "Clock"
           },
           {
             text: "wazon",
-            val : "vase"
+            val : "Vase"
           },
           {
             text: "scyzoryk",
-            val : "scissors"
+            val : "Scissors"
           },
           {
             text: "pluszak",
-            val : "teddy_bear"
+            val : "Teddy_bear"
           },
           {
             text: "szuszarka",
-            val : "hair_drier"
+            val : "Hair_drier"
           },
           {
             text: "szczoteczka",
-            val : "toothbrush"
+            val : "Toothbrush"
           }
       ],
     dateFrom: new Date().toISOString().substr(0, 10),
     dateTo: new Date().toISOString().substr(0, 10),
     dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
     selected : [],
+    selectedProbability : [],
+
 }),
   methods: {
   async getData() {
   try {
-    console.log(this.selected)
 
     return await axios.get('http://192.168.45.103:5002/reports/getMotionByHours',
     {
@@ -388,7 +413,8 @@ export default {
       Begin: this.dateFrom,
       End: this.dateTo,
       ObjectType : this.selected,
-      NumberOfPixels : 1000,
+      NumberOfPixels : this.pixels,
+      Probability : this.selectedProbability
     }
     })
   } catch (error) {
